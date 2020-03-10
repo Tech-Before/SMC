@@ -1,10 +1,10 @@
 <?php
     include('../_stream/config.php');
+
     session_start();
     if (empty($_SESSION["user"])) {
         header("LOCATION:../index.php");
     }
-
 
     $notAdded = '';
 
@@ -19,53 +19,55 @@
     $newPatient = $currentYearNewPatient."0".($yearlyCountedPatients + 1);
 
     if (isset($_POST['patientRegister'])) {
+        $yearlyNumber = $_POST['patientYearlyNumber'];
         $name = $_POST['patientName'];
-        $RegNo = $_POST['patientRegNo'];
         $Age = $_POST['patientAge'];
         $Gender = $_POST['patientGender'];
-        $Address = $_POST['patientAddress'];
-        $DateOfAdmission = $_POST['patientDateOfAdmission'];
-        $DateOfOperation = $_POST['patientDateOfOperation'];
         $disease = $_POST['patientDisease'];
-        $operation = $_POST['patientOperation'];
+        $Address = $_POST['patientAddress'];
+        $address_city = $_POST['address_city'];
+        $DateOfAdmission = $_POST['patientDateOfAdmission'];
         $consultant = $_POST['patientConsultant'];
-        $yearlyNumber = $_POST['patientYearlyNumber'];
-        $currentPatient = $_POST['category'];
+        $patientRoom = $_POST['patientRoom'];
+        $attendantName = $_POST['attendantName'];
 
-        $queryAddPatient = mysqli_query($connect, "INSERT INTO patient_registration(
+        $currentPatient = 'observationPatient';
+
+        $queryAddPatient = mysqli_query($connect, 
+            "INSERT INTO patient_registration(
             patient_name, 
-            reg_no, 
             patient_age, 
             patient_gender, 
             patient_address, 
+            city_id,
+            room_id, 
             patient_doa, 
-            patient_doop, 
             patient_disease, 
-            patient_operation, 
             patient_consultant, 
-            patient_yearly_no,
-            category)
-            VALUES(
+            attendent_name, 
+            category, 
+            patient_yearly_no
+            )VALUES(
             '$name', 
-            '$RegNo', 
             '$Age', 
             '$Gender', 
             '$Address', 
+            '$address_city', 
+            '$patientRoom', 
             '$DateOfAdmission', 
-            '$DateOfOperation', 
             '$disease', 
-            '$operation', 
-            '$consultant',
-            '$yearlyNumber',
-            '$currentPatient'
-        )");
+            '$consultant', 
+            '$attendantName', 
+            '$currentPatient',
+            '$yearlyNumber'         
+            )
+           ");
 
         if (!$queryAddPatient) {
-            //echo "Error";
-
+            echo mysqli_error($queryAddPatient);
             $notAdded = 'Not added';
         }else {
-            header("LOCATION: patients_list.php");
+            header("LOCATION: observation_list.php");
         }
     }
 
@@ -86,7 +88,6 @@
             <div class="col-12">
                 <div class="card m-b-30">
                     <div class="card-body">
-                        <h4 class="mb-4 page-title">Patient Details</h4>
                         <form method="POST">
                             <div class="form-group row">
                                 <label class="col-sm-2 offset-sm-6 col-form-label">M.R No.</label>
@@ -94,6 +95,7 @@
                                     <input class="form-control" type="text" value="<?php echo $newPatient ?>" placeholder="Yearly No." name="patientYearlyNumber" id="example-text-input" readonly>
                                 </div>
                             </div>
+                        <h4 class="mb-4 page-title"><u>Patient Details</u></h4>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Name</label>
                                 <div class="col-sm-4">
@@ -140,15 +142,16 @@
                                 </div>
                                 <label class="col-sm-2 col-form-label">City</label>
                                 <div class="col-sm-4">
-                                    <select class="form-control" name="patientOperation">
-                                        <option value="Apendix">abc</option>
-                                        <option value="Heart Bypass">xyz</option>
+                                    <select class="form-control" name="address_city">
+                                        <option value="1">abc</option>
+                                        <option value="2">xyz</option>
                                     </select>
                                 </div>
 
                             </div>
                             <hr>
-                        <h4 class="mb-4 page-title">Patient Admission Details</h4>
+
+                        <h4 class="mb-4 page-title"><u>Patient Admission Details</u></h4>
 
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Date of Admission</label>
@@ -167,32 +170,21 @@
                                         <option value="Dr. Aman Ullah">Dr. Aman Ullah</option>
                                     </select>
                                 </div>
-                                
-
-
-                                <!--<label class="col-sm-2 col-form-label">Date of Operation</label>
-                                 <div class="col-sm-4">
-                                    <div class="input-group">
-                                        <input type="" class="form-control  form_datetime" name="patientDateOfOperation" placeholder="dd/mm/yyyy-hh:mm" >
-                                        <div class="input-group-append bg-custom b-0"><span class="input-group-text"><i class="mdi mdi-calendar"></i></span></div>
-                                    </div>
-                                </div> -->
                             </div>
 
                            
                             <div class="form-group row">
                                  <label class="col-sm-2 col-form-label">Room No.</label>
                                 <div class="col-sm-4">
-                                    <select class="form-control" name="patientConsultant">
+                                    <select class="form-control" name="patientRoom">
                                         <option value="Dr. Habib">1</option>
                                         <option value="Dr. Taj Muhammad">12</option>
-                                        
                                     </select>
                                 </div>
 
                                <label class="col-sm-2 col-form-label">Attendant Name</label>
                                 <div class="col-sm-4">
-                                    <input class="form-control" name="patientName" type="text" placeholder="Attendant Name" id="example-text-input">
+                                    <input class="form-control" name="attendantName" type="text" placeholder="Attendant Name" id="example-text-input">
                                 </div>
                                 
                             </div>

@@ -60,27 +60,6 @@
                                     </div>
                                 </div>
 
-                                <div class="col-xl-4 col-md-6">
-                                    <div class="card mini-stat m-b-30">
-                                        <div class="p-3 bg-primary text-white">
-                                            <div class="mini-stat-icon">
-                                                <i class="mdi mdi-account-multiple float-right mb-0"></i>
-                                            </div>
-                                            <h6 class="text-uppercase mb-0">Users</h6>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="border-bottom pb-4 text-center">
-                                               <span style="font-family: 'Vollkorn', serif; font-size: 100px"><?php echo $allUsers ?></span>
-                                            </div>
-                                            <!-- <div class="mt-4 text-muted">
-                                                
-                                               
-                                                
-                                            </div> -->
-                                        </div>
-                                    </div>
-                                </div>
-
                                 
                                 <div class="col-xl-4 col-md-6">
                                     <div class="card mini-stat m-b-30">
