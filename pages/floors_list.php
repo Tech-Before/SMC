@@ -5,6 +5,28 @@
         header("LOCATION:../index.php");
     }
 
+    $alreadyAdded = '';
+    $added = '';
+    $error= '';
+
+    if (isset($_POST['addFloor'])) {
+        $floorName = $_POST['floorName'];
+
+        $countQuery = mysqli_query($connect, "SELECT COUNT(*)AS countedFloors FROM floors");
+        $fetch_countQuery = mysqli_fetch_assoc($countQuery);
+
+
+        if ($fetch_countQuery['countedFloors'] == 0) {
+            $insertQuery = mysqli_query($connect, "INSERT INTO floors(floor_name)VALUES('$floorName')");
+            if (!$insertQuery) {
+                $error = 'Not Added! Try agian!';
+            }else {
+                $added = 'Floor Added!';
+            }
+        }else {
+            $alreadyAdded = 'Floor Already Added!';
+        }
+    }
 
 
     include('../_partials/header.php');
@@ -28,7 +50,7 @@
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-sm-2 col-form-label">Floor No.</label>
                                 <div class="col-sm-4">
-                                    <input class="form-control" type="text" value="" id="example-text-input" name="floorName" required="">
+                                    <input class="form-control" placeholder="Floor No." type="text" value="" id="example-text-input" name="floorName" required="">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -39,6 +61,9 @@
                                 </div>
                             </div>
                         </form>
+                        <h5><?php echo $error ?></h5>
+                        <h5><?php echo $added ?></h5>
+                        <h5><?php echo $alreadyAdded ?></h5>
                     </div>
                 </div>
                 <div class="card m-b-30">
@@ -56,12 +81,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>12</td>
-                                    <td class="text-center"><a href="./floor_edit.php" type="button" class="btn text-white btn-warning waves-effect waves-light">Edit</a></td>
-                                    <td class="text-center"><a type="button" id="sa-warning" class="btn text-white btn-danger waves-effect waves-light">Delete</a></td>
-                                </tr>
+                                <?php
+                                $retrieve_data = mysqli_query($connect, "SELECT * FROM floors");
+                                $iteration = 1;
+
+                                while ($rowFloors = mysqli_fetch_assoc($retrieve_data)) {
+                                    echo '
+                                    <tr>
+                                        <td>'.$iteration++.'</td>
+                                        <td>'.$rowFloors['floor_name'].'</td>
+                                        <td class="text-center"><a href="floor_edit.php?id='.$rowFloors['id'].'" type="button" class="btn text-white btn-warning waves-effect waves-light">Edit</a></td>
+                                        
+                                        <td class="text-center"><a type="button" id="sa-warning" class="btn text-white btn-danger waves-effect waves-light">Delete</a></td>
+                                    </tr>
+                                    ';
+                                }
+                                ?>
+                                
                             </tbody>
                         </table>
                     </div>

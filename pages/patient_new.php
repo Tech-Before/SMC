@@ -30,6 +30,8 @@
         $consultant = $_POST['patientConsultant'];
         $patientRoom = $_POST['patientRoom'];
         $attendantName = $_POST['attendantName'];
+        $patient_cnic = $_POST['patientCnic'];
+        $patient_contact = $_POST['patientContact'];
 
         $currentPatient = 'observationPatient';
 
@@ -46,7 +48,9 @@
             patient_consultant, 
             attendent_name, 
             category, 
-            patient_yearly_no
+            patient_yearly_no,
+            patient_cnic,
+            patient_contact
             )VALUES(
             '$name', 
             '$Age', 
@@ -59,7 +63,9 @@
             '$consultant', 
             '$attendantName', 
             '$currentPatient',
-            '$yearlyNumber'         
+            '$yearlyNumber', 
+            '$patient_cnic', 
+            ' $patient_contact'
             )
            ");
 
@@ -148,6 +154,17 @@
                                     </select>
                                 </div>
 
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">CNIC</label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" name="patientCnic" placeholder="CNIC">
+                                </div>
+                                <label class="col-sm-2 col-form-label">Contact</label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" name="patientContact" placeholder="Patient Contact">
+                                </div>
                             </div>
                             <hr>
 
