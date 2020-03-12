@@ -12,7 +12,7 @@
     if (isset($_POST['addFloor'])) {
         $floorName = $_POST['floorName'];
 
-        $countQuery = mysqli_query($connect, "SELECT COUNT(*)AS countedFloors FROM floors");
+        $countQuery = mysqli_query($connect, "SELECT COUNT(*)AS countedFloors FROM floors WHERE floor_name = '$floorName'");
         $fetch_countQuery = mysqli_fetch_assoc($countQuery);
 
 
@@ -70,11 +70,11 @@
                     <div class="card-body">
                         <h4 class="mt-0 header-title">Floor Details</h4>
                         <a href="floor_new.php" type="button" class="btn btn-primary waves-effect waves-light text-white ml-auto" style="float: right;">Add New Floor</a>
-                        <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <table id="datatable" class="table dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Floor No.</th>
-                                    <th>Number of rooms</th>
                                     <th class="text-center"> <i class="fa fa-edit"></i>
                                     </th>
                                     <th class="text-center"><i class="fa fa-trash"></i></th>

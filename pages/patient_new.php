@@ -65,7 +65,7 @@
             '$currentPatient',
             '$yearlyNumber', 
             '$patient_cnic', 
-            ' $patient_contact'
+            '$patient_contact'
             )
            ");
 
@@ -191,13 +191,27 @@
 
                            
                             <div class="form-group row">
-                                 <label class="col-sm-2 col-form-label">Room No.</label>
+                            <!--      <label class="col-sm-2 col-form-label">Room No.</label>
                                 <div class="col-sm-4">
                                     <select class="form-control" name="patientRoom">
                                         <option value="Dr. Habib">1</option>
                                         <option value="Dr. Taj Muhammad">12</option>
                                     </select>
-                                </div>
+                                </div> -->
+
+
+                                <?php
+                                    $select_option = mysqli_query($connect, "SELECT * FROM rooms WHERE status = '1'");
+                                        $options = '<select class="form-control" name="patientRoom" required="">';
+                                          while ($row = mysqli_fetch_assoc($select_option)) {
+                                            $options.= '<option value='.$row['id'].'>'.$row['room_number'].'</option>';
+                                          }
+                                        $options.= "</select>";
+                                    echo '<label class="col-sm-2 col-form-label">Room No.</label>'.$options;
+                                ?>
+
+
+
 
                                <label class="col-sm-2 col-form-label">Attendant Name</label>
                                 <div class="col-sm-4">
